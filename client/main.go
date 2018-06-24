@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	pb "mini-conf"
+	pb "github.com/ljones92/grpc-go-quiz"
 
 	"google.golang.org/grpc"
 )
