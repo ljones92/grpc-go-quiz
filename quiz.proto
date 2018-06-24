@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package quiz;
+
+service Quiz {
+    rpc getQuestion (QuestionRequest) returns (Question) {}
+    rpc CheckAnswer (Answer) returns (AnswerCorrect) {}
+}
+
+message QuestionRequest {}
+
+message Question {
+    string question = 1;
+    int32 id = 2;
+}
+
+message Answer {
+    string body = 1;
+    int32 questionId = 2;
+}
+
+message AnswerCorrect {
+    bool correct = 1;
+    string answer = 2;
+}
