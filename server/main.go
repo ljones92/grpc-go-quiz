@@ -22,7 +22,7 @@ func (s *server) GetQuestion(ctx context.Context, in *pb.QuestionRequest) (*pb.Q
 	rand.Seed(time.Now().UTC().UnixNano())
 	question := Questions[rand.Intn(len(Questions))]
 
-	return &pb.QuestionResponse{Question: question.Body, Answer: question.Answer}, nil
+	return &pb.QuestionResponse{Question: question.Question, Answer: question.Answer}, nil
 }
 
 func main() {

@@ -37,12 +37,12 @@ func main() {
 		reader := bufio.NewReader(os.Stdin)
 		answer, _ := reader.ReadString('\n')
 
-		trimmedAnswer := strings.TrimRight(answer, "\n")
+		a := strings.TrimRight(answer, "\n")
 
-		if trimmedAnswer == q.Answer {
-			fmt.Println("Correct!!!")
+		if a == q.Answer {
+			fmt.Printf("Correct!!!\n\n")
 		} else {
-			fmt.Println("That's wrong the correct answer is: " + q.Answer)
+			fmt.Printf("That's wrong the correct answer is: %v\n\n", q.Answer)
 		}
 	}
 }
