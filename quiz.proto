@@ -3,23 +3,23 @@ syntax = "proto3";
 package quiz;
 
 service Quiz {
-    rpc getQuestion (QuestionRequest) returns (Question) {}
-    rpc CheckAnswer (Answer) returns (AnswerCorrect) {}
+    rpc GetQuestion(QuestionRequest) returns (QuestionResponse) {}
+    rpc CheckAnswer(AnswerRequest) returns (AnswerResponse) {}
 }
 
 message QuestionRequest {}
 
-message Question {
+message QuestionResponse {
     string question = 1;
-    int32 id = 2;
-}
-
-message Answer {
-    string body = 1;
     int32 questionId = 2;
 }
 
-message AnswerCorrect {
+message AnswerRequest {
+    string answer = 1;
+    int32 questionId = 2;
+}
+
+message AnswerResponse {
     bool correct = 1;
     string answer = 2;
 }
