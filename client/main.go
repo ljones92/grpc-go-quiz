@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	pb "github.com/ljones92/grpc-go-quiz"
 
@@ -34,20 +35,14 @@ func main() {
 		fmt.Println("Enter your answer...")
 
 		reader := bufio.NewReader(os.Stdin)
-		text, _ := reader.ReadString('\n')
+		answer, _ := reader.ReadString('\n')
 
-		s, err := c.CheckAnswer(context.Background(), &pb.Answer{
-			Body:       text,
-			QuestionId: q.Id,
-		})
-		if err != nil {
-			log.Fatalf("could not check answer: %v", err)
-		}
+		trimmedAnswer := strings.TrimRight(answer, "\n")
 
-		if s.Correct {
+		if trimmedAnswer == q.Answer {
 			fmt.Println("Correct!!!")
 		} else {
-			fmt.Println("That's wrong the correct answer is: " + s.Answer)
+			fmt.Println("That's wrong the correct answer is: " + q.Answer)
 		}
 	}
 }

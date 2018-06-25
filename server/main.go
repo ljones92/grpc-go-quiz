@@ -5,7 +5,6 @@ import (
 	"log"
 	"math/rand"
 	"net"
-	"strings"
 	"time"
 
 	pb "github.com/ljones92/grpc-go-quiz"
@@ -19,25 +18,11 @@ const (
 
 type server struct{}
 
-func (s *server) GetQuestion(ctx context.Context, in *pb.QuestionRequest) (*pb.Question, error) {
+func (s *server) GetQuestion(ctx context.Context, in *pb.QuestionRequest) (*pb.QuestionResponse, error) {
 	rand.Seed(time.Now().UTC().UnixNano())
 	question := Questions[rand.Intn(len(Questions))]
-	return &pb.Question{Question: question.Body, Id: question.ID}, nil
-}
 
-func (s *server) CheckAnswer(ctx context.Context, in *pb.Answer) (*pb.AnswerCorrect, error) {
-	givenAnswer := strings.TrimRight(in.Body, "\n")
-	correctAnswer := func() string {
-		for i := range Questions {
-			if Questions[i].ID == in.QuestionId {
-				return Questions[i].Answer
-			}
-		}
-
-		return ""
-	}()
-
-	return &pb.AnswerCorrect{Correct: givenAnswer == correctAnswer, Answer: correctAnswer}, nil
+	return &pb.QuestionResponse{Question: question.Body, Answer: question.Answer}, nil
 }
 
 func main() {
@@ -47,9 +32,10 @@ func main() {
 	}
 
 	s := grpc.NewServer()
+
 	pb.RegisterQuizServer(s, &server{})
 
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Fatalf("failed to server: %v", err)
 	}
 }

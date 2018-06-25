@@ -4,22 +4,11 @@ package quiz;
 
 service Quiz {
     rpc GetQuestion(QuestionRequest) returns (QuestionResponse) {}
-    rpc CheckAnswer(AnswerRequest) returns (AnswerResponse) {}
 }
 
 message QuestionRequest {}
 
 message QuestionResponse {
     string question = 1;
-    int32 questionId = 2;
-}
-
-message AnswerRequest {
-    string answer = 1;
-    int32 questionId = 2;
-}
-
-message AnswerResponse {
-    bool correct = 1;
     string answer = 2;
 }
